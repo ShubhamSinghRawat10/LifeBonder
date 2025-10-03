@@ -7,15 +7,26 @@
     <meta name="description" content="Learn about our blood donation system and mission">
     <meta name="author" content="Blood Donation System">
     
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
+
     <link rel="stylesheet" href="css/styles.css">
-    <!-- Google Fonts -->
+  
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Navigation -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var first = document.body.firstChild;
+            while (first && first.nodeType === Node.TEXT_NODE && first.textContent.trim() === '') {
+                document.body.removeChild(first);
+                first = document.body.firstChild;
+            }
+            if (first && first.nodeType === Node.TEXT_NODE && first.textContent.trim().indexOf('//hi') === 0) {
+                document.body.removeChild(first);
+            }
+        });
+    </script>
+ 
     <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
         <div class="container">
             <a class="navbar-brand" href="index.html">Blood Donation</a>
@@ -44,7 +55,6 @@
         </div>
     </nav>
 
-    <!-- About Section -->
     <div class="container">
         <div class="row">
             <div class="col-md-8 offset-md-2">
@@ -117,11 +127,10 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Font Awesome -->
+
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <!-- Custom JS -->
+  
     <script src="js/api.js"></script>
     <script src="js/main.js"></script>
 </body>

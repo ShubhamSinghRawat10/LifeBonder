@@ -168,8 +168,6 @@ body {
     border-color: var(--primary-color);
     box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
 } 
-
-/* New Hero Section Styles */
 .hero-section {
     background: linear-gradient(135deg, #dc3545 0%, #c82333 50%, #a71e2a 100%);
     color: white;
@@ -266,7 +264,6 @@ body {
     transform: scale(1.05);
 }
 
-/* Quick Search Container in Donate Section */
 .quick-search-container {
     background: white;
     padding: 2.5rem;
@@ -341,7 +338,6 @@ body {
     display: none;
 }
 
-/* Donate Section Styles */
 .donate-section {
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     padding: 80px 0;
@@ -430,7 +426,6 @@ body {
     }
 }
 
-/* Mission Section Styles */
 .mission-section {
     padding: 80px 0;
     background: white;
