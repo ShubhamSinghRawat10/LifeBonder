@@ -1,231 +1,26 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Donate The Blood</title>
-    <meta name="description" content="Blood Donation Website">
-    <meta name="author" content="Blood Donation System">
-    
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-   
-    <link rel="stylesheet" href="css/styles.css">
-   
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
-<body>
-    
-    <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">Blood Donation Bootcamp</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="donate.html">Donate</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="search.html">Search</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="about.html">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="signin.html">Sign In</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container-fluid hero-section">
-        <div class="container">
-            <div class="row align-items-center min-vh-100">
-                <div class="col-lg-6">
-                    <div class="hero-content">
-                        <h1 class="hero-title">The Place Where Every Drop of Blood Saves a Life!</h1>
-                        <p class="hero-subtitle">Join our mission to create a compassionate and connected community where every individual understands the importance of blood donation.</p>
-                        
-                        <div class="hero-stats">
-                            <div class="stat-item">
-                                <div class="stat-number">50K+</div>
-                                <div class="stat-label">Lives Saved</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-number">10K+</div>
-                                <div class="stat-label">Donors</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-number">100+</div>
-                                <div class="stat-label">Cities</div>
-                            </div>
-                        </div>
-
-                        <div class="hero-actions">
-                            <a href="donate.html" class="btn btn-danger btn-lg me-3">
-                                <i class="fas fa-heart me-2"></i>Become a Donor
-                            </a>
-                            <a href="search.html" class="btn btn-outline-light btn-lg">
-                                <i class="fas fa-search me-2"></i>Find Donors
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="hero-image-container">
-                        <img src="img/blood.jpg" alt="Blood Donation" class="hero-image">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container-fluid donate-section">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <div class="donate-content">
-                        <h2 class="section-title">Donate The Blood</h2>
-                        <p class="section-text">
-                            Our motive is to create a compassionate and connected community where every individual understands the importance of blood donation. We strive to eliminate shortages by encouraging voluntary donations and making the process simple, efficient, and accessible to all.
-                        </p>
-                        <div class="donate-features">
-                            <div class="feature-item">
-                                <i class="fas fa-clock text-danger"></i>
-                                <span>Quick & Easy Process</span>
-                            </div>
-                            <div class="feature-item">
-                                <i class="fas fa-shield-alt text-danger"></i>
-                                <span>Safe & Secure</span>
-                            </div>
-                            <div class="feature-item">
-                                <i class="fas fa-users text-danger"></i>
-                                <span>Join Our Community</span>
-                            </div>
-                        </div>
-                        <a href="donate.html" class="btn btn-light btn-lg">
-                            <i class="fas fa-heart me-2"></i>Become a Life Saver!
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="donate-visual">
-                        <div class="quick-search-container">
-                            <h3 class="search-title">Quick Search for Donors</h3>
-                            <p class="search-subtitle">Find blood donors in your area quickly and easily</p>
-                            <form action="search.html" method="get" class="donate-search-form">
-                                <div class="form-group mb-3">
-                                    <label for="donate-city" class="form-label">City</label>
-                                    <select name="city" id="donate-city" class="form-control" required>
-                                        <option value="">-- Select City --</option>
-                                      
-                                    </select>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="donate-blood-group" class="form-label">Blood Group</label>
-                                    <select name="blood_group" id="donate-blood-group" class="form-control" required>
-                                        <option value="">-- Blood Group --</option>
-                                        <option value="A+">A+</option>
-                                        <option value="A-">A-</option>
-                                        <option value="B+">B+</option>
-                                        <option value="B-">B-</option>
-                                        <option value="AB+">AB+</option>
-                                        <option value="AB-">AB-</option>
-                                        <option value="O+">O+</option>
-                                        <option value="O-">O-</option>
-                                    </select>
-                                </div>
-                                <button type="submit" class="btn btn-danger w-100">
-                                    <i class="fas fa-search me-2"></i>Search Donors
-                                </button>
-                            </form>
-                            <div class="search-info">
-                                <div class="info-item">
-                                    <i class="fas fa-info-circle text-danger"></i>
-                                    <span>Search is free and anonymous</span>
-                                </div>
-                                <div class="info-item">
-                                    <i class="fas fa-shield-alt text-danger"></i>
-                                    <span>All donors are verified</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container mission-section">
-        <div class="row">
-            <div class="col-lg-4 mb-4">
-                <div class="mission-card">
-                    <div class="card-icon">
-                        <img src="img/binoculars.png" alt="Our Vision" class="mission-icon">
-                    </div>
-                    <h3 class="card-title">Our Vision</h3>
-                    <p class="card-text">
-                        We are a group of exceptional programmers; our aim is to promote education. If you are a student, then contact us to secure your future. We deliver free international standard video lectures and content. We are also providing services in Web & Software Development.
-                    </p>
-                </div>
-            </div>
-            
-            <div class="col-lg-4 mb-4">
-                <div class="mission-card">
-                    <div class="card-icon">
-                        <img src="img/target.png" alt="Our Goal" class="mission-icon">
-                    </div>
-                    <h3 class="card-title">Our Goal</h3>
-                    <p class="card-text">
-                        Our goal is to create a user-friendly platform that connects blood donors with urgent need, raises awareness about voluntary blood donation, and eliminates misconceptions. We partner with hospitals, blood banks, and NGOs to build a network.
-                    </p>
-                </div>
-            </div>
-            
-            <div class="col-lg-4 mb-4">
-                <div class="mission-card">
-                    <div class="card-icon">
-                        <img src="img/goal.png" alt="Our Mission" class="mission-icon">
-                    </div>
-                    <h3 class="card-title">Our Mission</h3>
-                    <p class="card-text">
-                        Our mission is to create a life-saving platform connecting blood donors with those in need, raising awareness about blood donation, and encouraging voluntary giving. We aim to provide a seamless, transparent, and efficient system.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container-fluid cta-section">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8 text-center">
-                    <h2 class="cta-title">Ready to Make a Difference?</h2>
-                    <p class="cta-text">Every donation counts. Join thousands of donors who are saving lives every day.</p>
-                    <div class="cta-buttons">
-                        <a href="donate.html" class="btn btn-danger btn-lg me-3">
-                            <i class="fas fa-heart me-2"></i>Donate Now
-                        </a>
-                        <a href="search.html" class="btn btn-outline-light btn-lg">
-                            <i class="fas fa-search me-2"></i>Find Donors
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-   
-    <script src="js/api.js"></script>
-    <script src="js/main.js"></script>
-</body>
-</html> 
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blood Donation Network</title>
+    <meta
+      name="description"
+      content="A React-based blood donation platform for donor registration, donor search, and awareness."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <script type="module" src="/src/main.jsx"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  </html>
