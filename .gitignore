@@ -1,6 +1,7 @@
 blood donation/node_modules/
-blood donation/dist/
-blood donation/.env
+blood donation/frontend/dist/
+blood donation/frontend/.env
+blood donation/backend/.env
 
 # Logs
 *.log

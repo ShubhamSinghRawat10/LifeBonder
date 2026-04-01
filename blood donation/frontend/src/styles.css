@@ -335,11 +335,17 @@ textarea {
   position: relative;
   overflow: hidden;
   padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 520px;
 }
 
 .hero-media-card img {
-  aspect-ratio: 4 / 4.2;
-  object-fit: cover;
+  width: 100%;
+  height: auto;
+  max-height: 480px;
+  object-fit: contain;
   border-radius: 24px;
 }
 
@@ -619,6 +625,185 @@ textarea:focus {
   gap: 0.75rem;
 }
 
+.coverage-panel {
+  display: block;
+}
+
+.coverage-experience {
+  display: grid;
+  gap: 1rem;
+}
+
+.coverage-toolbar {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.coverage-pill {
+  display: inline-grid;
+  gap: 0.2rem;
+  padding: 0.95rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.76);
+  color: var(--text);
+  text-align: left;
+  box-shadow: var(--shadow);
+}
+
+.coverage-pill span {
+  color: var(--text-soft);
+  font-size: 0.92rem;
+}
+
+.coverage-pill-active {
+  border-color: rgba(214, 40, 57, 0.34);
+  background: linear-gradient(135deg, rgba(214, 40, 57, 0.1), rgba(255, 179, 107, 0.22));
+  box-shadow: 0 18px 40px rgba(214, 40, 57, 0.12);
+}
+
+.coverage-map-wrap,
+.coverage-sidebar {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  border-radius: var(--radius-xl);
+}
+
+.coverage-map-wrap {
+  overflow: hidden;
+  padding: 1rem;
+}
+
+.coverage-map {
+  width: 100%;
+  height: 560px;
+  border: 0;
+  border-radius: 24px;
+  background: linear-gradient(180deg, #fff4ef, #fffdfc);
+}
+
+.coverage-map-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.coverage-map-head h3 {
+  margin: 0;
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+}
+
+.coverage-map-note {
+  max-width: 260px;
+  margin: 0;
+  color: var(--text-soft);
+  line-height: 1.6;
+  text-align: right;
+}
+
+.coverage-map .leaflet-control-zoom a {
+  color: var(--primary-deep);
+}
+
+.coverage-map .leaflet-control-zoom {
+  border: 0;
+  box-shadow: 0 18px 30px rgba(35, 24, 21, 0.12);
+}
+
+.coverage-map .leaflet-control-zoom a {
+  width: 38px;
+  height: 38px;
+  line-height: 38px;
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.coverage-map .leaflet-bottom,
+.coverage-map .leaflet-top {
+  z-index: 10;
+}
+
+.leaflet-popup-card {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 150px;
+}
+
+.donor-marker {
+  background: transparent;
+  border: 0;
+}
+
+.donor-marker span {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #d62839, #8f1022);
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.82rem;
+  box-shadow: 0 12px 24px rgba(143, 16, 34, 0.3);
+  border: 3px solid rgba(255, 255, 255, 0.95);
+}
+
+.coverage-sidebar {
+  display: grid;
+  grid-template-columns: minmax(260px, 360px) minmax(0, 1fr);
+  gap: 1rem;
+  padding: 1.2rem;
+  align-items: start;
+}
+
+.coverage-copy h3 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.6rem, 3vw, 2.3rem);
+  line-height: 1.05;
+}
+
+.coverage-copy p:last-child,
+.coverage-highlight span,
+.coverage-pill span {
+  color: var(--text-soft);
+  line-height: 1.6;
+}
+
+.coverage-highlight {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1.15rem 1.15rem;
+  border-radius: 22px;
+  background: var(--surface-muted);
+  color: var(--primary-deep);
+}
+
+.coverage-badge {
+  width: fit-content;
+  padding: 0.5rem 0.75rem;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--primary);
+  font-weight: 800;
+  box-shadow: inset 0 0 0 1px rgba(214, 40, 57, 0.1);
+}
+
+.coverage-copy h4 {
+  margin: 0 0 0.8rem;
+  font-size: 1.08rem;
+}
+
+.coverage-points {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--text-soft);
+  display: grid;
+  gap: 0.65rem;
+}
+
 .donor-map {
   width: 100%;
   min-height: 460px;
@@ -745,6 +930,28 @@ textarea:focus {
     align-items: flex-start;
     flex-direction: column;
   }
+
+  .coverage-map-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .coverage-map-note {
+    max-width: none;
+    text-align: left;
+  }
+
+  .coverage-sidebar {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-media-card {
+    min-height: auto;
+  }
+
+  .hero-media-card img {
+    max-height: none;
+  }
 }
 
 @media (max-width: 640px) {
@@ -784,5 +991,14 @@ textarea:focus {
 
   .donor-map {
     min-height: 320px;
+  }
+
+  .coverage-map {
+    height: 380px;
+  }
+
+  .coverage-toolbar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
 }

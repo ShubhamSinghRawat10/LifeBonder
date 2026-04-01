@@ -3,7 +3,8 @@ import bloodImage from "../../img/blood.jpg";
 import binocularsIcon from "../../img/binoculars.png";
 import targetIcon from "../../img/target.png";
 import goalIcon from "../../img/goal.png";
-import { bloodGroups, statesAndCities } from "../data";
+import CoverageMap from "../components/CoverageMap";
+import { bloodGroups, mockDonors, statesAndCities } from "../data";
 
 const quickCities = Object.values(statesAndCities).flat();
 
@@ -54,14 +55,6 @@ export default function HomePage() {
           <div className="hero-media">
             <div className="hero-media-card">
               <img src={bloodImage} alt="Blood donation support" />
-              <div className="floating-note floating-note-top">
-                <strong>Search nearby donors</strong>
-                <span>Use map and local filtering</span>
-              </div>
-              <div className="floating-note floating-note-bottom">
-                <strong>Register in minutes</strong>
-                <span>Share your blood group and city</span>
-              </div>
             </div>
           </div>
         </div>
@@ -170,6 +163,22 @@ export default function HomePage() {
               </p>
             </article>
           </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <div className="section-heading">
+            <p className="eyebrow">Coverage map</p>
+            <h2>See where the donor network is already active.</h2>
+            <p className="section-lead">
+              A built-in map now gives visitors an instant sense of local reach
+              and how the search experience will feel once they begin looking
+              for donors.
+            </p>
+          </div>
+
+          <CoverageMap donors={mockDonors} />
         </div>
       </section>
 
