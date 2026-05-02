@@ -13,12 +13,10 @@ export default function Navbar() {
     <nav className="site-nav">
       <div className="container nav-inner">
         <NavLink to="/" className="brand">
-          <span className="brand-mark">
-            <i className="fas fa-droplet" />
-          </span>
+          <img src="/logo.png" alt="LifeBonder Logo" className="brand-logo" />
           <span className="brand-copy">
-            <strong>Blood Donation</strong>
-            <small>Community Network</small>
+            <strong>LifeBonder</strong>
+            <small>Blood Donation Platform</small>
           </span>
         </NavLink>
 
