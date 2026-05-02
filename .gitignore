@@ -1,0 +1,17 @@
+# dependencies
+node_modules/
+blood donation/node_modules/
+
+# env files
+.env
+.env.*
+
+# logs
+*.log
+
+# build files
+dist/
+blood donation/frontend/dist/
+
+# misc
+.DS_Store
