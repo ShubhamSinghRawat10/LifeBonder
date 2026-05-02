@@ -1,140 +1,166 @@
 <div align="center">
+  <img src="https://img.icons8.com/color/96/000000/drop-of-blood.png" alt="LifeBonder Logo" width="80" />
+  
+  # LifeBonder - Blood Donation Platform 🩸
+  
+  *Empowering communities by connecting blood donors with those in need.*
 
-## 🩸 Blood Donation Website
-
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit-blue)](https://blood-donation-website-atid.onrender.com)
-[![Status](https://img.shields.io/badge/Status-Active-success)](#)
-[![License](https://img.shields.io/badge/License-MIT-green)](#license)
-
+  <p align="center">
+    <a href="https://reactjs.org/"><img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" /></a>
+    <a href="https://nodejs.org/"><img src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js" /></a>
+    <a href="https://expressjs.com/"><img src="https://img.shields.io/badge/Express.js-404D59?style=for-the-badge" alt="Express.js" /></a>
+    <a href="https://www.mongodb.com/"><img src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB" /></a>
+  </p>
+  
+  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+  [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 </div>
 
-An accessible, responsive website to connect blood donors with people in need. It provides information about donation, allows users to search for donors, and streamlines the process to sign in and offer help.
+<br />
 
-> GitHub short description (for the repo tagline/description field): A responsive frontend to connect blood donors and seekers with search, donate, and sign‑in flows.
+## 📖 Overview
+
+**LifeBonder** is a modern, responsive full-stack web application designed to bridge the gap between blood donors and recipients. During urgent medical situations, time is of the essence. LifeBonder simplifies the process of finding local donors by integrating a powerful geospatial search engine and an intuitive user interface. 
+
+With built-in geolocation and mapping capabilities, users can quickly locate the nearest matching blood donor, fostering a faster and more efficient community outreach.
 
 ---
 
-## ✨ Features
+## ✨ Key Features
 
-- Responsive, mobile‑first pages: Home, About, Donate, Search, Sign‑in
-- Donor search with filters and interactive UI
-- Simple donation flow with client‑side validation
-- Clean, modern UI with reusable CSS
-- Modular JavaScript for API calls and page logic
+- 🔍 **Advanced Donor Search:** Filter by blood group, state, city, and proximity (distance).
+- 🗺️ **Geospatial & Map Integration:** View donors on an interactive Google Map or OpenStreetMap coverage view.
+- 📱 **Modern & Responsive UI:** A beautifully designed frontend with a sleek, glassmorphic navigation bar and dynamic transitions.
+- 🔐 **Secure Authentication:** JWT-based secure sign-in and registration flows.
+- 📍 **Location-Aware:** Uses browser geolocation to seamlessly detect and plot nearby matching donors.
+- 🚀 **Fallback Mechanisms:** Built-in mock donor generation when the backend is unreachable—ideal for isolated frontend development.
 
-## 🚀 Live Demo
+---
 
-- Demo: https://blood-donation-website-atid.onrender.com
+## 🛠️ Tech Stack
 
-## 🧱 Tech Stack
+### Frontend
+- **Framework:** React 18
+- **Routing:** React Router v6
+- **Build Tool:** Vite
+- **Maps:** Google Maps API & Leaflet (OpenStreetMap)
+- **Styling:** Custom Vanilla CSS with modern aesthetics (Flexbox, Grid, Glassmorphism)
 
-- HTML5, CSS3 (Vanilla)
-- JavaScript (Vanilla, modular scripts)
-- No backend required to run locally; API calls can be wired to any service
+### Backend
+- **Runtime:** Node.js
+- **Framework:** Express.js
+- **Database:** MongoDB (with Mongoose)
+- **Authentication:** JWT (JSON Web Tokens) & bcryptjs
+- **Geospatial:** MongoDB `2dsphere` indexes for radius search
 
-## 📁 Project Structure
+---
 
-```
-Blood-Donation-Website/
-└─ blood donation/
-   ├─ index.html        # Landing page
-   ├─ about.html        # About blood donation
-   ├─ donate.html       # Donation flow (form/UI)
-   ├─ search.html       # Donor search page
-   ├─ signin.html       # Sign-in page
-   ├─ css/
-   │  └─ styles.css     # Global styles
-   ├─ js/
-   │  ├─ main.js        # Home page logic
-   │  ├─ search.js      # Search logic and interactions
-   │  ├─ donate.js      # Donation form logic/validation
-   │  ├─ signin.js      # Sign-in logic
-   │  └─ api.js         # API helper functions
-   └─ img/              # Images and icons
-```
+## 🚀 Getting Started
 
-## 🧰 Quick Start (Local)
+Follow these instructions to get a copy of the project up and running on your local machine for development and testing.
 
-Because this is a static site, you can run it in minutes.
+### Prerequisites
 
-1) Clone the repository
+- **Node.js** (v18 or higher recommended)
+- **MongoDB** (Local instance or Atlas URI)
+
+### 1. Clone the repository
 
 ```bash
-git clone https://github.com/<your-username>/Blood-Donation-Website.git
-cd Blood-Donation-Website/blood\ donation
+git clone https://github.com/ShubhamSinghRawat10/LifeBonder.git
+cd LifeBonder/"blood donation"
 ```
 
-2) Open locally
-
-- Option A: Double‑click `index.html` to open in your browser
-- Option B: Use a local server (recommended for fetch/API and routing)
+### 2. Install Dependencies
 
 ```bash
-# Using VS Code Live Server (extension) or:
-python -m http.server 5500
-# then open http://localhost:5500 in your browser
+npm install
 ```
 
-## 🔌 Configuration
+### 3. Setup Environment Variables
 
-- API endpoints and integration points live in `js/api.js`. Adjust base URLs and request methods as needed for your backend.
-- Page‑specific behavior is in `js/main.js`, `js/search.js`, `js/donate.js`, and `js/signin.js`.
-- Global styling is defined in `css/styles.css`.
+You need to create two `.env` files based on the provided examples.
 
-## 🧪 Testing Checklist (Manual)
-
-- Home page loads without layout shifts on mobile and desktop
-- Search accepts valid inputs and displays meaningful results/empty states
-- Donate form validates required fields and shows errors inline
-- Sign‑in handles success/error states
-- Navigation links work across all pages
-
-## 🌐 SEO & Meta
-
-- Add descriptive `<title>` and meta description to each page
-- Include Open Graph/Twitter meta tags for better link previews
-- Optimize images in `img/` for size and performance
-
-## 📸 Screenshots (optional)
-
-Add screenshots to showcase the UI:
-
-```
-img/
-├─ header.png
-├─ blood.jpg
-└─ ...
+**Backend (`backend/.env`):**
+```env
+PORT=3000
+MONGODB_URI=mongodb://127.0.0.1:27017/blood-donation-app
+JWT_SECRET=your_super_secret_jwt_key
+CLIENT_ORIGIN=http://127.0.0.1:5173
 ```
 
-You can embed them in README once uploaded:
+**Frontend (`frontend/.env`):**
+```env
+VITE_GOOGLE_MAPS_API_KEY=your_google_maps_api_key_here
+VITE_API_BASE_URL=http://localhost:3000/api
+```
+*(Note: Google Maps API key is optional. Without it, the application elegantly falls back to a placeholder map.)*
 
-```markdown
-![Header](blood%20donation/img/header.png)
+### 4. Run the Application
+
+The project uses `concurrently` to run both the frontend and backend servers seamlessly.
+
+```bash
+npm run dev
 ```
 
-## 🧭 Roadmap Ideas
+- **Frontend:** http://localhost:5173
+- **Backend API:** http://localhost:3000
 
-- Connect to a real donor registry API
-- Add user profiles and donor verification
-- Enable location‑based search and maps
-- Multi‑language support
+---
+
+## 📂 Project Structure
+
+```text
+LifeBonder/
+├── backend/                  # Express server & MongoDB configurations
+│   ├── config/               # Database connection strings
+│   ├── controllers/          # Route logic and handlers
+│   ├── models/               # Mongoose schemas (Donor, User, etc.)
+│   ├── routes/               # API endpoints
+│   └── server.js             # Entry point for the backend
+├── frontend/                 # Vite + React application
+│   ├── src/                  # React components, pages, and context
+│   │   ├── components/       # Reusable UI components (Navbar, Footer, etc.)
+│   │   ├── pages/            # View components (Home, Search, Donate, etc.)
+│   │   └── styles.css        # Global CSS styling
+│   └── index.html            # Main HTML template
+└── package.json              # Project dependencies and workspace scripts
+```
+
+---
+
+## 📡 API Reference
+
+### Authentication
+- `POST /api/auth/register` - Create a new user account
+- `POST /api/auth/login` - Authenticate and return JWT
+
+### Donors
+- `POST /api/donors` - Register a new donor
+- `GET /api/donors/search` - Search for donors (Supports query params: `state`, `city`, `blood_group`, `distance`, `lat`, `lng`)
+
+---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please:
+Contributions make the open source community an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-1. Fork the repo
-2. Create a feature branch: `git checkout -b feat/your-feature`
-3. Commit changes: `git commit -m "feat: add your feature"`
-4. Push to the branch: `git push origin feat/your-feature`
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file if present, or include one with your preferred terms.
 
 ---
 
-## 💡 Credits
+## 📜 License
 
-Built with HTML, CSS, and JavaScript to support the life‑saving mission of blood donation.
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+
+<div align="center">
+  <b>Built with ❤️ for a better tomorrow.</b><br>
+  If you find this project helpful, please consider giving it a ⭐️!
+</div>
