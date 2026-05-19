@@ -17,6 +17,7 @@ export default function Footer() {
           <Link to="/">Home</Link>
           <Link to="/donate">Donate</Link>
           <Link to="/search">Search</Link>
+          <Link to="/dashboard">Dashboard</Link>
           <Link to="/about">About</Link>
           <Link to="/signin">Sign In</Link>
         </div>

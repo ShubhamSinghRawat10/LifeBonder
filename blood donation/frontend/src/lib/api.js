@@ -49,4 +49,7 @@ export const api = {
     const params = new URLSearchParams(query);
     return request(`/donors/search?${params.toString()}`);
   },
+  listAvailableDonors() {
+    return request("/donors/search");
+  },
 };
