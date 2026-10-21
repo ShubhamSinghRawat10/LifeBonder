@@ -8,6 +8,7 @@
     "client:dev": "vite --config frontend/vite.config.js",
     "server:dev": "nodemon backend/server/server.js",
     "server": "node backend/server/server.js",
+    "test": "node --test backend/server/**/*.test.js",
     "build": "vite build --config frontend/vite.config.js",
     "preview": "vite preview --config frontend/vite.config.js"
   },

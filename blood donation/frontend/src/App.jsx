@@ -17,6 +17,7 @@ export default function App() {
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/signin" element={<SignInPage />} />
+        <Route path="*" element={<section className="page-section"><div className="container narrow"><div className="page-card"><p className="eyebrow">Page not found</p><h1>This page doesn’t exist.</h1><a className="btn btn-primary" href="/">Return home</a></div></div></section>} />
       </Route>
     </Routes>
   );

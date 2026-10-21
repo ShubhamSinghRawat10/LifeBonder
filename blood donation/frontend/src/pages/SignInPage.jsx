@@ -43,10 +43,10 @@ export default function SignInPage() {
 
       setMessage({ type: "success", text: "Signed in successfully." });
       setTimeout(() => navigate("/"), 1000);
-    } catch {
+    } catch (error) {
       setMessage({
         type: "error",
-        text: "Sign-in backend is not connected yet, but the React login flow is ready.",
+        text: error.message || "Sign-in failed. Please try again.",
       });
     } finally {
       setLoading(false);

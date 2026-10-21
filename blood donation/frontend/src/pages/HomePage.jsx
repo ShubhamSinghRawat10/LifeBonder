@@ -23,16 +23,16 @@ export default function HomePage() {
 
             <div className="hero-stats">
               <div>
-                <strong>50K+</strong>
-                <span>Lives impacted</span>
+                <strong>8</strong>
+                <span>Blood groups supported</span>
               </div>
               <div>
-                <strong>10K+</strong>
-                <span>Registered donors</span>
+                <strong>18+</strong>
+                <span>Minimum donor age</span>
               </div>
               <div>
-                <strong>100+</strong>
-                <span>Connected cities</span>
+                <strong>Local</strong>
+                <span>City-based matching</span>
               </div>
             </div>
 
@@ -178,6 +178,7 @@ export default function HomePage() {
             </p>
           </div>
 
+          <p className="helper-text">Illustrative sample locations. Live donor locations appear in search results when donors share map coordinates.</p>
           <CoverageMap donors={mockDonors} />
         </div>
       </section>

@@ -104,16 +104,21 @@ export default function GoogleDonorMap({
 
           marker.addListener("click", () => {
             onSelectDonor?.(donor.id);
-            infoWindow.setContent(
-              `
-                <div style="min-width:180px">
-                  <strong>${donor.name || donor.fullName || "Donor"}</strong>
-                  <div>${donor.city}, ${donor.state}</div>
-                  <div>Blood Group: ${donor.bloodGroup || donor.blood_group || "Unknown"}</div>
-                  <div>Phone: ${donor.contact || donor.phone || "Not available"}</div>
-                </div>
-              `
-            );
+            const content = document.createElement("div");
+            content.style.minWidth = "180px";
+            const name = document.createElement("strong");
+            name.textContent = donor.name || donor.fullName || "Donor";
+            content.append(name);
+            [
+              `${donor.city || ""}${donor.state ? `, ${donor.state}` : ""}`,
+              `Blood Group: ${donor.bloodGroup || donor.blood_group || "Unknown"}`,
+              `Phone: ${donor.contact || donor.phone || "Not available"}`,
+            ].forEach((value) => {
+              const line = document.createElement("div");
+              line.textContent = value;
+              content.append(line);
+            });
+            infoWindow.setContent(content);
             infoWindow.open({ map, anchor: marker });
           });
 

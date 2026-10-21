@@ -1,23 +1,6 @@
 import { useMemo, useState } from "react";
 import { api } from "../lib/api";
-import { bloodGroups, mockDonors, statesAndCities } from "../data";
-import GoogleDonorMap from "../components/GoogleDonorMap";
-
-function monthsAgo(dateString) {
-  if (!dateString) return "Not available";
-  const now = new Date();
-  const then = new Date(dateString);
-  const months = Math.max(
-    0,
-    Math.floor((now.getTime() - then.getTime()) / (1000 * 60 * 60 * 24 * 30))
-  );
-  return `${months} months ago`;
-}
-
-function toNumber(value) {
-  const parsed = Number(value);
-  return Number.isFinite(parsed) ? parsed : null;
-}
+import { bloodGroups, statesAndCities } from "../data";
 
 function normalizeDonor(donor, index) {
   return {
@@ -26,25 +9,7 @@ function normalizeDonor(donor, index) {
     name: donor.name || donor.fullName || `Donor ${index + 1}`,
     bloodGroup: donor.bloodGroup || donor.blood_group || "Unknown",
     contact: donor.contact || donor.phone || "",
-    latitude: toNumber(donor.latitude ?? donor.lat),
-    longitude: toNumber(donor.longitude ?? donor.lng),
-    lastDonation: donor.lastDonation || donor.last_donation || "",
   };
-}
-
-function haversineDistanceKm(from, to) {
-  const toRad = (value) => (value * Math.PI) / 180;
-  const earthRadiusKm = 6371;
-  const latDelta = toRad(to.latitude - from.latitude);
-  const lngDelta = toRad(to.longitude - from.longitude);
-  const a =
-    Math.sin(latDelta / 2) * Math.sin(latDelta / 2) +
-    Math.cos(toRad(from.latitude)) *
-      Math.cos(toRad(to.latitude)) *
-      Math.sin(lngDelta / 2) *
-      Math.sin(lngDelta / 2);
-
-  return 2 * earthRadiusKm * Math.asin(Math.sqrt(a));
 }
 
 export default function SearchPage() {
@@ -60,6 +25,9 @@ export default function SearchPage() {
   const [userLocation, setUserLocation] = useState(null);
   const [locationMessage, setLocationMessage] = useState("");
   const [selectedDonorId, setSelectedDonorId] = useState(null);
+  const [searchError, setSearchError] = useState("");
+  const [contactDonor, setContactDonor] = useState(null);
+  const [copiedPhone, setCopiedPhone] = useState(false);
 
   const cities = useMemo(
     () => statesAndCities[filters.state] || [],
@@ -89,7 +57,7 @@ export default function SearchPage() {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         });
-        setLocationMessage("Your location is ready. You can now compare nearby donors.");
+        setLocationMessage("Location will be sent only with your search request and is not saved by the app.");
       },
       () => {
         setLocationMessage(
@@ -104,6 +72,8 @@ export default function SearchPage() {
     event.preventDefault();
     setLoading(true);
     setSearched(true);
+    setSearchError("");
+    setSelectedDonorId(null);
 
     try {
       const liveResults = await api.searchDonors({
@@ -119,38 +89,23 @@ export default function SearchPage() {
         ? liveResults.map(normalizeDonor)
         : [];
       setResults(normalized);
-    } catch {
-      const filtered = mockDonors.filter((donor) => {
-        return (
-          (!filters.state || donor.state === filters.state) &&
-          (!filters.city || donor.city === filters.city) &&
-          (!filters.blood_group || donor.bloodGroup === filters.blood_group)
-        );
-      });
-      setResults(filtered.map(normalizeDonor));
+    } catch (error) {
+      setResults([]);
+      setSearchError(error.message || "Donor search is unavailable. Please try again.");
     } finally {
       setLoading(false);
     }
   }
 
-  const nearestDonor = useMemo(() => {
-    if (!userLocation || !results.length) {
-      return null;
+  async function copyDonorPhone() {
+    if (!contactDonor?.contact || !navigator.clipboard?.writeText) return;
+    try {
+      await navigator.clipboard.writeText(contactDonor.contact);
+      setCopiedPhone(true);
+    } catch {
+      setCopiedPhone(false);
     }
-
-    const withDistance = results
-      .filter(
-        (donor) =>
-          Number.isFinite(donor.latitude) && Number.isFinite(donor.longitude)
-      )
-      .map((donor) => ({
-        ...donor,
-        distanceKm: haversineDistanceKm(userLocation, donor),
-      }))
-      .sort((a, b) => a.distanceKm - b.distanceKm);
-
-    return withDistance[0] || null;
-  }, [results, userLocation]);
+  }
 
   return (
     <section className="page-section">
@@ -248,36 +203,17 @@ export default function SearchPage() {
               <div className="page-card map-card">
                 <div className="map-card-head">
                   <div>
-                    <p className="eyebrow">Map view</p>
-                    <h2>Nearest donors on Google Maps</h2>
+                    <p className="eyebrow">Privacy-first matching</p>
+                    <h2>Nearby donor matches</h2>
                   </div>
-                  {nearestDonor ? (
-                    <div className="nearest-chip">
-                      Closest donor: {nearestDonor.name} at{" "}
-                      {nearestDonor.distanceKm.toFixed(1)} km
-                    </div>
-                  ) : null}
+                  <div className="nearest-chip">Sorted by proximity. Exact donor locations are kept private.</div>
                 </div>
-
-                <GoogleDonorMap
-                  donors={results}
-                  userLocation={userLocation}
-                  selectedDonorId={selectedDonorId || nearestDonor?.id}
-                  onSelectDonor={setSelectedDonorId}
-                />
+                <p className="helper-text">For privacy, individual map pins and precise locations are not displayed. When you share your location, the server uses it to sort matches by distance and does not save it. Results show city only.</p>
               </div>
 
               <div className="results-grid">
                 {results.map((donor) => {
-                  const distanceLabel =
-                    userLocation &&
-                    Number.isFinite(donor.latitude) &&
-                    Number.isFinite(donor.longitude)
-                      ? `${haversineDistanceKm(userLocation, donor).toFixed(1)} km away`
-                      : null;
-
-                  const isHighlighted =
-                    donor.id === (selectedDonorId || nearestDonor?.id);
+                  const isHighlighted = donor.id === selectedDonorId;
 
                   return (
                     <article
@@ -290,25 +226,26 @@ export default function SearchPage() {
                     <p>
                       {donor.city}, {donor.state}
                     </p>
-                    <p>Age: {donor.age ?? "Not available"}</p>
-                      <p>Last donation: {monthsAgo(donor.lastDonation)}</p>
-                      {distanceLabel ? (
-                        <p className="distance-pill">{distanceLabel}</p>
-                      ) : null}
                       {isHighlighted ? (
-                        <p className="nearest-label">Best local match on the map</p>
+                        <p className="nearest-label">Selected donor</p>
                       ) : null}
-                    <a
+                    {donor.contact ? <button
                       className="btn btn-secondary"
-                      href={`tel:${donor.contact}`}
+                      type="button"
+                      onClick={() => {
+                        setCopiedPhone(false);
+                        setContactDonor(donor);
+                      }}
                     >
                       Contact Donor
-                    </a>
+                    </button> : <p className="helper-text">This donor chose not to share a phone number.</p>}
                   </article>
                   );
                 })}
               </div>
             </>
+          ) : searchError ? (
+            <div className="empty-state" role="alert">{searchError}</div>
           ) : (
             <div className="empty-state">
               No donors matched your search. Try another blood group or nearby city.
@@ -316,6 +253,38 @@ export default function SearchPage() {
           )
         ) : null}
       </div>
+      {contactDonor ? (
+        <div
+          className="contact-dialog-backdrop"
+          onClick={() => setContactDonor(null)}
+        >
+          <section
+            className="contact-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="contact-dialog-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <p className="eyebrow">Donor contact</p>
+            <h2 id="contact-dialog-title">Contact {contactDonor.name}</h2>
+            <p>Call the number this donor chose to share:</p>
+            <a className="contact-phone" href={`tel:${contactDonor.contact}`}>
+              {contactDonor.contact}
+            </a>
+            <div className="contact-dialog-actions">
+              <a className="btn btn-primary" href={`tel:${contactDonor.contact}`}>
+                Call Donor
+              </a>
+              <button className="btn btn-secondary" type="button" onClick={copyDonorPhone}>
+                {copiedPhone ? "Number Copied" : "Copy Number"}
+              </button>
+              <button className="btn btn-secondary" type="button" onClick={() => setContactDonor(null)}>
+                Close
+              </button>
+            </div>
+          </section>
+        </div>
+      ) : null}
     </section>
   );
 }

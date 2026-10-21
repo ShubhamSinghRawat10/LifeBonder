@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { activeEmergencies, bloodGroups, mockDonors } from "../data";
+import { activeEmergencies, bloodGroups } from "../data";
 import { api } from "../lib/api";
 
 function normalizeDonor(donor, index) {
@@ -139,9 +139,9 @@ function EmergencyCard({ emergency, availableDonors }) {
 }
 
 export default function DashboardPage() {
-  const [donors, setDonors] = useState(() => mockDonors.map(normalizeDonor));
+  const [donors, setDonors] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [dataSource, setDataSource] = useState("sample");
+  const [dataSource, setDataSource] = useState("loading");
 
   useEffect(() => {
     let isMounted = true;
@@ -155,14 +155,14 @@ export default function DashboardPage() {
           ? response.map(normalizeDonor).filter((donor) => donor.isAvailable)
           : [];
 
-        if (isMounted && liveDonors.length) {
+        if (isMounted) {
           setDonors(liveDonors);
           setDataSource("live");
         }
       } catch {
         if (isMounted) {
-          setDonors(mockDonors.map(normalizeDonor));
-          setDataSource("sample");
+          setDonors([]);
+          setDataSource("unavailable");
         }
       } finally {
         if (isMounted) {
@@ -248,11 +248,11 @@ export default function DashboardPage() {
 
           <div className="dashboard-status-panel">
             <span className={`live-dot ${dataSource === "live" ? "online" : ""}`} />
-            <strong>{dataSource === "live" ? "Connected to donor API" : "Sample data mode"}</strong>
+            <strong>{dataSource === "live" ? "Connected to donor API" : dataSource === "loading" ? "Connecting to donor API" : "Donor API unavailable"}</strong>
             <p>
               {isLoading
                 ? "Refreshing donor availability..."
-                : `${dashboard.totalDonors} available donors across ${dashboard.totalCities} cities`}
+                : dataSource === "unavailable" ? "Availability data could not be loaded." : `${dashboard.totalDonors} available donors across ${dashboard.totalCities} cities`}
             </p>
           </div>
         </div>
@@ -311,7 +311,7 @@ export default function DashboardPage() {
         <section className="analytics-panel emergencies-panel">
           <div className="panel-head">
             <div>
-              <p className="eyebrow">Emergency queue</p>
+              <p className="eyebrow">Example emergency queue</p>
               <h2>Active emergencies</h2>
             </div>
             <span>{dashboard.urgentUnits} units open</span>

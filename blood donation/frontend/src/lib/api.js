@@ -20,7 +20,8 @@ async function request(path, options = {}) {
   });
 
   if (!response.ok) {
-    throw new Error(`Request failed with status ${response.status}`);
+    const body = await response.json().catch(() => null);
+    throw new Error(body?.message || `Request failed with status ${response.status}`);
   }
 
   const contentType = response.headers.get("content-type") || "";
@@ -46,8 +47,10 @@ export const api = {
     });
   },
   searchDonors(query) {
-    const params = new URLSearchParams(query);
-    return request(`/donors/search?${params.toString()}`);
+    return request("/donors/search", {
+      method: "POST",
+      body: JSON.stringify(query),
+    });
   },
   listAvailableDonors() {
     return request("/donors/search");

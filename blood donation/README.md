@@ -25,6 +25,16 @@ The current experience is especially focused on Indian states and cities, with a
 - MongoDB geospatial search using a `2dsphere` index
 - Mock donor fallback on the search page if the backend is unavailable during frontend development
 
+## Privacy behavior
+
+- Donor directory listing requires an explicit consent checkbox at registration. The donor's name, blood group, and city/state are visible to searchers.
+- Phone numbers are returned only when the donor separately opts in to direct phone contact.
+- Registration responses never echo donor form data. Donor email remains private; street address, gender, and last-donation date are not collected by the current form.
+- Donor coordinates are used by the server to sort nearby results and are never returned to searchers. Requester coordinates are sent in a POST body and are not stored by the app.
+- Search results use a strict public-field allowlist. Old records without explicit listing consent are excluded.
+
+This is privacy hardening for the current prototype, not a complete security certification. Production use still needs a verified way for donors to review, update, and withdraw their listing, HTTPS, managed secret rotation, database backups/access controls, and an operational deletion process.
+
 ## Tech Stack
 
 ### Frontend

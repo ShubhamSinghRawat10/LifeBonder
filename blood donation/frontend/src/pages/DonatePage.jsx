@@ -7,14 +7,13 @@ const initialForm = {
   email: "",
   phone: "",
   age: "",
-  gender: "",
   blood_group: "",
   state: "",
   city: "",
-  address: "",
-  last_donation: "",
   latitude: "",
   longitude: "",
+  publicListingConsent: false,
+  sharePhone: false,
 };
 
 export default function DonatePage() {
@@ -26,10 +25,11 @@ export default function DonatePage() {
   const cities = useMemo(() => statesAndCities[form.state] || [], [form.state]);
 
   function updateField(event) {
-    const { name, value } = event.target;
+    const { name, type, checked, value } = event.target;
     setForm((current) => ({
       ...current,
-      [name]: value,
+      [name]: type === "checkbox" ? checked : value,
+      ...(name === "sharePhone" && !checked ? { phone: "" } : {}),
       ...(name === "state" ? { city: "" } : {}),
     }));
   }
@@ -65,15 +65,15 @@ export default function DonatePage() {
     setStatus({ type: "", message: "" });
 
     const age = Number(form.age);
-    if (age < 18 || age > 65) {
+    if (!Number.isInteger(age) || age < 18 || age > 65) {
       setStatus({ type: "error", message: "Age must be between 18 and 65." });
       return;
     }
 
-    if (!/^\d{10}$/.test(form.phone)) {
+    if (form.sharePhone && !/^\d{10}$/.test(form.phone)) {
       setStatus({
         type: "error",
-        message: "Phone number must be a valid 10-digit number.",
+        message: "Enter a valid 10-digit phone number to allow direct contact.",
       });
       return;
     }
@@ -87,11 +87,10 @@ export default function DonatePage() {
         message: "Registration submitted successfully.",
       });
       setForm(initialForm);
-    } catch {
+    } catch (error) {
       setStatus({
         type: "error",
-        message:
-          "Backend registration is not available right now, but the React form is ready to connect.",
+        message: error.message || "Registration failed. Please try again.",
       });
     } finally {
       setIsSubmitting(false);
@@ -111,7 +110,7 @@ export default function DonatePage() {
             </p>
             <div className="side-points">
               <div>Share your city and blood group</div>
-              <div>Add location for map-based discovery</div>
+              <div>Optional location is used to sort nearby matches and is never shown</div>
               <div>Stay visible for faster local matching</div>
             </div>
           </aside>
@@ -122,19 +121,13 @@ export default function DonatePage() {
                 Full Name
                 <input name="name" value={form.name} onChange={updateField} required />
               </label>
-              <label>
-                Email
-                <input
-                  type="email"
-                  name="email"
-                  value={form.email}
-                  onChange={updateField}
-                  required
-                />
+              <label className="full-span">
+                Email (kept private)
+                <input type="email" name="email" value={form.email} onChange={updateField} required />
               </label>
-              <label>
+              <label className="full-span">
                 Phone Number
-                <input name="phone" value={form.phone} onChange={updateField} required />
+                <input name="phone" value={form.phone} onChange={updateField} inputMode="numeric" maxLength="10" required={form.sharePhone} />
               </label>
               <label>
                 Age
@@ -147,15 +140,6 @@ export default function DonatePage() {
                   onChange={updateField}
                   required
                 />
-              </label>
-              <label>
-                Gender
-                <select name="gender" value={form.gender} onChange={updateField} required>
-                  <option value="">Select gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
-                </select>
               </label>
               <label>
                 Blood Group
@@ -201,24 +185,13 @@ export default function DonatePage() {
                   ))}
                 </select>
               </label>
-              <label className="full-span">
-                Address
-                <textarea
-                  name="address"
-                  rows="4"
-                  value={form.address}
-                  onChange={updateField}
-                  required
-                />
+              <label className="check-row full-span">
+                <input type="checkbox" name="publicListingConsent" checked={form.publicListingConsent} onChange={updateField} required />
+                <span>I agree to appear in donor searches. My name, blood group, and city will be visible to people searching. My address and precise location will never be shown.</span>
               </label>
-              <label className="full-span">
-                Last Donation Date
-                <input
-                  type="date"
-                  name="last_donation"
-                  value={form.last_donation}
-                  onChange={updateField}
-                />
+              <label className="check-row full-span">
+                <input type="checkbox" name="sharePhone" checked={form.sharePhone} onChange={updateField} />
+                <span>Show my phone number in search results so people can contact me directly. If unchecked, my phone number is not required or shown.</span>
               </label>
 
               <div className="full-span location-tools">
@@ -230,7 +203,7 @@ export default function DonatePage() {
                   Use My Current Location for Map
                 </button>
                 <p className="helper-text">
-                  This helps nearby users find you on the donor map.
+                  Used only to sort nearby matches. Your exact coordinates are never returned to searchers.
                 </p>
                 {locationMessage ? (
                   <div className="location-message">{locationMessage}</div>

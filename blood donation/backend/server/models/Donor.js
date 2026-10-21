@@ -16,7 +16,7 @@ const donorSchema = new mongoose.Schema(
     },
     phone: {
       type: String,
-      required: true,
+      required: false,
       trim: true,
     },
     age: {
@@ -25,13 +25,9 @@ const donorSchema = new mongoose.Schema(
       min: 18,
       max: 65,
     },
-    gender: {
-      type: String,
-      enum: ["male", "female", "other"],
-      required: true,
-    },
     blood_group: {
       type: String,
+      enum: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
       required: true,
       trim: true,
     },
@@ -44,15 +40,6 @@ const donorSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-    },
-    address: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    last_donation: {
-      type: Date,
-      default: null,
     },
     location: {
       type: {
@@ -69,6 +56,16 @@ const donorSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    publicListingConsent: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    sharePhone: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
   },
   { timestamps: true }
 );
@@ -77,17 +74,14 @@ donorSchema.index({ location: "2dsphere" });
 
 donorSchema.set("toJSON", {
   transform: (_doc, ret) => {
-    const json = { ...ret };
-    json.id = json._id.toString();
-    delete json._id;
-    delete json.__v;
-
-    if (json.location?.coordinates?.length === 2) {
-      json.longitude = json.location.coordinates[0];
-      json.latitude = json.location.coordinates[1];
-    }
-
-    return json;
+    return {
+      name: ret.name,
+      blood_group: ret.blood_group,
+      state: ret.state,
+      city: ret.city,
+      isAvailable: ret.isAvailable,
+      ...(ret.sharePhone === true ? { phone: ret.phone } : {}),
+    };
   },
 });
 
